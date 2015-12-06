@@ -1,0 +1,9 @@
+irc:
+  host: 'your_irc_server'
+  channel: '#your_channel'
+  port: 6667
+  nick: 'log2irc'
+  realname: 'sysBot v0.5'
+
+syslog:
+  port: 1514
