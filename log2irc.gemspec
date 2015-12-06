@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'syslog_protocol'
   spec.add_dependency 'string-irc'
+  spec.add_dependency 'snmp'
 
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'bundler', '~> 1.10'

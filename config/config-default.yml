@@ -7,3 +7,6 @@ irc:
 
 syslog:
   port: 1514
+
+snmp:
+  channel: '#snmp'

@@ -3,9 +3,11 @@ require 'string-irc'
 require 'syslog'
 require 'socket'
 require 'resolv'
+require 'snmp'
 require 'yaml'
 
 require 'log2irc/syslog_listener'
+require 'log2irc/snmp_listener'
 require 'log2irc/blacklist'
 require 'log2irc/version'
 require 'log2irc/channel'
@@ -18,6 +20,7 @@ module Log2irc
     @bot = IrcBot.new
     trap('INT') { @bot.quit }
     Thread.new { SyslogListener.new.start }
+    Thread.new { SnmpListener.new.start }
     @bot.run
   end
 
