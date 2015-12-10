@@ -19,6 +19,7 @@ module Log2irc
           message += "#{severity(parsed.severity_name)} "
           message += "#{StringIrc.new(host).bold} - #{tag} #{parsed.content}"
 
+          next if Severity.filter?(channel, parsed.severity_name)
           next if Blacklist.blacklisted?(channel, "#{tag} #{parsed.content}")
           @bot.say(message, channel)
         rescue => e

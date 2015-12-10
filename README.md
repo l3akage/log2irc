@@ -30,6 +30,12 @@ Set a hostname for an ip without reverse dns or override an existing hostname
 Refresh the reverse dns of an ip
 `!refresh [hostname|ip]`
 
+List possible severity levels
+`!list`
+
+Set channel severity (hide messages with < severity)
+`!set severity`
+
 Blacklists are per channel
 
 ## Contributing
