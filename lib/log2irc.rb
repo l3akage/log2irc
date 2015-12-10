@@ -7,6 +7,7 @@ require 'yaml'
 
 require 'log2irc/syslog_listener'
 require 'log2irc/blacklist'
+require 'log2irc/severity'
 require 'log2irc/version'
 require 'log2irc/channel'
 require 'log2irc/irc_bot'

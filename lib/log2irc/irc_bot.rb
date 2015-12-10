@@ -121,6 +121,25 @@ module Log2irc
         end
         return
       end
+
+      # set level
+      match = command.match(/\!set (.*)$/)
+      if match
+        if Severity.list.keys.include?(match[1].strip)
+          Severity.set(channel, match[1].strip)
+          say("Set level to #{match[1].strip}", channel)
+        else
+          say('Unknown level', channel)
+        end
+        return
+      end
+
+      # list levels
+      match = command.match(/\!list(.*)$/)
+      if match
+        say("Possible levels #{Severity.list.keys.join(', ')}", channel)
+        return
+      end
     end
 
     def quit
