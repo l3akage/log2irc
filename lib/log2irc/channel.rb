@@ -8,16 +8,19 @@ module Log2irc
           Log2irc.bot.join(to)
         end
         ip, hostname = remove(hostname_ip)
-        channels[to][ip] = hostname
+        channels[to][ip] = {
+          hostname: hostname,
+          last_log: Time.now.to_i
+        }
         save_config
       end
 
       # hostname or ip
       def rename(hostname_ip, hostname)
         channels.each do |channel, hosts|
-          hosts.each do |ip, oldhostname|
-            next unless ip == hostname_ip || oldhostname == hostname_ip
-            channels[channel][ip] = hostname
+          hosts.each do |ip, data|
+            next unless ip == hostname_ip || data[:hostname] == hostname_ip
+            channels[channel][ip][:hostname] = hostname
             save_config
             return true
           end
@@ -28,11 +31,11 @@ module Log2irc
       # hostname or ip
       def refresh(hostname_ip)
         channels.each do |channel, hosts|
-          hosts.each do |ip, hostname|
-            next unless ip == hostname_ip || hostname == hostname_ip
-            channels[channel][ip] = resolv(ip)
+          hosts.each do |ip, data|
+            next unless ip == hostname_ip || data[:hostname] == hostname_ip
+            channels[channel][ip][:hostname] = resolv(ip)
             save_config
-            return channels[channel][ip]
+            return channels[channel][ip][:hostname]
           end
         end
         false
@@ -41,27 +44,30 @@ module Log2irc
       # hostname or ip
       def remove(hostname_ip)
         channels.each do |channel, hosts|
-          hosts.each do |ip, hostname|
-            next unless ip == hostname_ip || hostname == hostname_ip
+          hosts.each do |ip, data|
+            next unless ip == hostname_ip || data[:hostname] == hostname_ip
             channels[channel].delete(ip)
             if channels[channel].empty?
               channels.delete(channel)
               Log2irc.bot.part(channel)
             end
-            return [ip, hostname]
+            return [ip, data[:hostname]]
           end
         end
+        nil
       end
 
       # ip
       def find(host_ip)
         channels.each do |channel, hosts|
-          hosts.each do |ip, hostname|
-            return [channel, hostname || ip] if ip == host_ip
+          hosts.each do |ip, data|
+            if ip == host_ip
+              data[:last_log] = Time.now.to_i
+              return [channel, data[:hostname]]
+            end
           end
         end
-        add_new_host(host_ip)
-        [Log2irc.settings['irc']['channel'], host_ip]
+        [Log2irc.settings['irc']['channel'], add_new_host(host_ip)]
       end
 
       def channels
@@ -79,8 +85,12 @@ module Log2irc
       def add_new_host(host_ip)
         ch = Log2irc.settings['irc']['channel']
         channels[ch] = {} unless channels[ch]
-        channels[ch][host_ip] = resolv(host_ip)
+        channels[ch][host_ip] = {
+          hostname: resolv(host_ip),
+          last_log: Time.now.to_i
+        }
         save_config
+        channels[ch][host_ip][:hostname]
       end
 
       def resolv(host_ip)

@@ -110,6 +110,14 @@ module Log2irc
         return
       end
 
+      # remove host|ip
+      match = command.match(/\!remove (.*)$/)
+      if match
+        ip, hostname = Channel.remove(match[1].strip)
+        say("Removed #{ip} #{ip != hostname ? hostname : ''}", channel)
+        return
+      end
+
       # update reverse dns of host|ip
       match = command.match(/\!refresh (.*)$/)
       if match

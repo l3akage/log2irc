@@ -8,6 +8,7 @@ require 'yaml'
 require 'log2irc/syslog_listener'
 require 'log2irc/blacklist'
 require 'log2irc/severity'
+require 'log2irc/watchdog'
 require 'log2irc/version'
 require 'log2irc/channel'
 require 'log2irc/irc_bot'
@@ -17,8 +18,12 @@ module Log2irc
 
   def start
     @bot = IrcBot.new
-    trap('INT') { @bot.quit }
+    trap('INT') do
+      @bot.quit
+      Channel.save_config
+    end
     Thread.new { SyslogListener.new.start }
+    Thread.new { Watchdog.new.start } if Log2irc.settings['watchdog']
     @bot.run
   end
 

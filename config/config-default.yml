@@ -7,3 +7,6 @@ irc:
 
 syslog:
   port: 1514
+
+watchdog:
+  time: 30 # minutes

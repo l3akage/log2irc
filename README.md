@@ -27,6 +27,9 @@ Move syslog from a host into another channel
 Set a hostname for an ip without reverse dns or override an existing hostname
 `!rename [hostname|ip] hostname`
 
+Remove host from channel list
+`!remove [hostname|ip]`
+
 Refresh the reverse dns of an ip
 `!refresh [hostname|ip]`
 
