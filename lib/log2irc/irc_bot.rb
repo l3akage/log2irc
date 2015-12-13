@@ -17,6 +17,7 @@ module Log2irc
       @nick     = Log2irc.settings['irc']['nick'] || 'log2irc'
       @realname = Log2irc.settings['irc']['realname'] || 'sysBot v0.1'
       @channels = [@channel]
+      @channels << Log2irc.settings['snmp']['channel'] if Log2irc.settings['snmp']
       @state    = :disconnected
     end
 

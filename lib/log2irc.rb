@@ -21,7 +21,7 @@ module Log2irc
     @bot = IrcBot.new
     trap('INT') { @bot.quit }
     Thread.new { SyslogListener.new.start }
-    Thread.new { SnmpListener.new.start }
+    Thread.new { SnmpListener.new.start } if Log2irc.settings['snmp']
     @bot.run
   end
 
