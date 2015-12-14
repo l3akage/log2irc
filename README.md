@@ -16,34 +16,46 @@ Syslog to IRC Gateway with message filtering
 `$ ./bin/log2irc`
 
 Add string to blacklist
+
 `!add word`
 
 Remove string from blacklist
+
 `!del word`
 
 Move syslog from a host into another channel
+
 `!move [hostname|ip] channel`
 
 Set a hostname for an ip without reverse dns or override an existing hostname
+
 `!rename [hostname|ip] hostname`
 
 Remove host from channel list
+
 `!remove [hostname|ip]`
 
 Refresh the reverse dns of an ip
+
 `!refresh [hostname|ip]`
 
 List possible severity levels
+
 `!list`
 
 Set channel severity (hide messages with < severity)
+
 `!set severity`
+
+Set watchdog time for a host
+
+`!watchdog [hostname|ip] [time in minutes]`
 
 Blacklists are per channel
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/log2irc/fork )
+1. Fork it ( http://github.com/l3akage/log2irc/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

@@ -57,6 +57,18 @@ module Log2irc
         nil
       end
 
+      # hostname or ip
+      def watchdog(hostname_ip, time)
+        channels.each do |channel, hosts|
+          hosts.each do |ip, data|
+            next unless ip == hostname_ip || data[:hostname] == hostname_ip
+            data[:watchdog] = time
+            return [ip, data[:hostname]]
+          end
+        end
+        nil
+      end
+
       # ip
       def find(host_ip)
         channels.each do |channel, hosts|

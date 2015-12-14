@@ -142,6 +142,17 @@ module Log2irc
         return
       end
 
+      # set watchdog time for host
+      match = command.match(/\!watchdog (.*) (.*)$/)
+      if match
+        if Channel.watchdog(match[1].strip, match[2].strip.to_i)
+          say("Set time for #{match[1].strip} to #{match[2].strip.to_i}", channel)
+        else
+          say("#{match[1].strip} not found", channel)
+        end
+        return
+      end
+
       # list levels
       match = command.match(/\!list(.*)$/)
       if match
