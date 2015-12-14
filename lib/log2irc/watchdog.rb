@@ -10,7 +10,7 @@ module Log2irc
         begin
           Channel.channels.each do |_channel, hosts|
             hosts.each do |ip, data|
-              next unless data[:last_log].nil? || (Time.now.to_i - data[:last_log]) > @time * 60
+              next unless data[:last_log] && (Time.now.to_i - data[:last_log]) > @time * 60
               since = data[:last_log].nil? ? 'always' : "#{(Time.now.to_i - data[:last_log]) / 60} minutes"
               msg = "Watchdog: #{ip}(#{data[:hostname]}) is silent since #{since}"
               @bot.say(msg)
