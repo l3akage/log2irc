@@ -16,7 +16,7 @@ module Log2irc
       end
 
       def blacklist(channel)
-        return @blacklists[channel] if @blacklist && @blacklist[channel]
+        return @blacklists[channel] if @blacklists && @blacklists[channel]
         @blacklists = {} unless @blacklists
         if File.exist?(file_path(channel))
           @blacklists[channel] = YAML.load_file(file_path(channel))
@@ -32,7 +32,7 @@ module Log2irc
 
       def save_blacklist(channel)
         File.open(file_path(channel), 'w') do |f|
-          f.write @blacklists[channel].to_yaml
+          f.write blacklist(channel).to_yaml
         end
       end
     end
