@@ -15,11 +15,11 @@ Syslog to IRC Gateway with message filtering
 
 `$ ./bin/log2irc`
 
-Add string to blacklist
+Add string to blacklist*
 
 `!add word`
 
-Remove string from blacklist
+Remove string from blacklist*
 
 `!del word`
 
@@ -51,7 +51,16 @@ Set watchdog time for a host
 
 `!watchdog [hostname|ip] [time in minutes]`
 
-Blacklists are per channel
+Add word to highlights list. If a message contains that word it gets posted to the Slack webhook
+
+`!hadd word`
+
+Remove word from highlights
+
+`!hdel word`
+
+\*Blacklists are per channel
+
 
 ## Contributing
 

@@ -10,3 +10,9 @@ syslog:
 
 watchdog:
   time: 30 # minutes
+
+slack:
+  channel: '#syslog'
+  username: 'Syslog'
+  icon: ':memo:'
+  webhook:

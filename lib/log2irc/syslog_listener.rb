@@ -21,6 +21,7 @@ module Log2irc
 
           next if Severity.filter?(channel, parsed.severity_name)
           next if Blacklist.blacklisted?(channel, "#{tag} #{parsed.content}")
+          Highlight.highlighted?(channel, parsed.severity_name, host, "#{tag} #{parsed.content}")
           @bot.say(message, channel)
         rescue => e
           @bot.say("EXCEPTION: #{e.message} => #{e.backtrace.join("\n")}")

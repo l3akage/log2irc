@@ -159,6 +159,22 @@ module Log2irc
         say("Possible levels #{Severity.list.keys.join(', ')}", channel)
         return
       end
+
+      # add word to highlights
+      match = command.match(/\!hadd (.*)$/)
+      if match
+        Highlight.add(match[1].strip)
+        say("Added: #{match[1].strip}", channel)
+        return
+      end
+
+      # remove word from highlights
+      match = command.match(/\!hdel (.*)$/)
+      if match
+        Highlight.del(match[1].strip)
+        say("Removed: #{match[1].strip}", channel)
+        return
+      end
     end
 
     def quit
