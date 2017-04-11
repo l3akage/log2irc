@@ -59,6 +59,15 @@ Remove word from highlights
 
 `!hdel word`
 
+Ignore highlights for host
+
+`!hignore host`
+
+Notice highlights for host again
+
+`!hnotice host`
+
+
 \*Blacklists are per channel
 
 

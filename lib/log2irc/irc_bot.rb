@@ -175,6 +175,22 @@ module Log2irc
         say("Removed: #{match[1].strip}", channel)
         return
       end
+
+      # ignore host for highlights
+      match = command.match(/\!hignore (.*)$/)
+      if match
+        Highlight.add_ignore(match[1].strip)
+        say("Ignoring for highlights: #{match[1].strip}", channel)
+        return
+      end
+
+      # notice highlights for host again
+      match = command.match(/\!hnotice (.*)$/)
+      if match
+        Highlight.del_ignore(match[1].strip)
+        say("Notice highlights for: #{match[1].strip}", channel)
+        return
+      end
     end
 
     def quit
